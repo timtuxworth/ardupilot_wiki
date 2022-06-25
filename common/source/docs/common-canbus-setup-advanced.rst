@@ -50,6 +50,8 @@ parameter ``CAN_Px_DRIVER``, where x is the number of the CAN port.
 The value of this parameter is the id of driver that will be associated with this
 port (interface).
 
+Each enabled bus/driver will use 12k of memory with defaults.
+
 For example, the most common setup will have one driver and all interfaces will be connected
 to it.
 The :ref:`CAN_P1_DRIVER<CAN_P1_DRIVER>` and :ref:`CAN_P2_DRIVER<CAN_P2_DRIVER>` parameters in this configuration should be set to 1 (first
