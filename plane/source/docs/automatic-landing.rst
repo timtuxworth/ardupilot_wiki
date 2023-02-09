@@ -41,6 +41,10 @@ Setting Up the Approach Waypoint
 
 The autolanding begins after reaching the last navigation waypoint before the NAV_LAND waypoint (where you want to touchdown and land). This waypoint must be far enough from the touchdown point and at an altitude that a reasonable glide slope can be obtained. Without an airspeed sensor, the speed will be that of normal waypoint navigation, which without an airspeed sensor is primarily controlled by :ref:`TRIM_THROTTLE<TRIM_THROTTLE>`. It is important to have a glide slope that is obtainable with the :ref:`TECS_SINK_MAX<TECS_SINK_MAX>` rate of the vehicle and preferably, well below that rate. You can lower the approach airspeed in order to reduce the time in the flare, and possible overshoot of landing point, by adjusting the :ref:`TECS_LAND_THR<TECS_LAND_THR>` to a lower value than :ref:`TRIM_THROTTLE<TRIM_THROTTLE>`. Be careful, not to lower it so much as to cause a stall on approach.
 
+.. note::
+
+   If you use QGroundControl to add add your landing, the waypoints added are slightly different. QGround Control will add a "Loiter to altitude" waypoint, then a do land start, finally a NAV_LAND. The loiter to altitude is another way to line up the plane for landing, but if you use this approach, make sure to set the loiter direction correctly so that the plane will exit the loiter lined up correctly for the landing.
+   
 In addition, the last navigation waypoint before NAV_LAND must be far enough away that any turns made by the mission to that waypoint will have already be completed and the vehicle back on track in a line to the landing point. Usually, two waypoints are used. The first to allow any mission item (including aborted go-arounds for an autoland reattempt) to get aligned to another waypoint setup closer to the touchdown point but still providing a nice glide slope. We will designate the last waypoint before the NAV_LAND as the "final approach" waypoint and the one before it the "pre-approach" waypoint, as shown above. The next figure shows these waypoints **incorrectly** placed, without sufficient spacing:
 
 .. image:: ../../../images/autolanding-approach.png
