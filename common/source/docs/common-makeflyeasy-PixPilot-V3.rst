@@ -58,10 +58,10 @@ UART Mapping
 ============
 
  - SERIAL0 -> console (primary mavlink, usually USB)
- - SERIAL1 -> USART2  (telem1,DMA-enabled)
- - SERIAL2 -> USART3  (Telem2,DMA-enabled)
+ - SERIAL1 -> USART2  (telem1,Rx DMA-enabled)
+ - SERIAL2 -> USART3  (Telem2,Rx/Tx DMA-enabled)
  - SERIAL3 -> UART4   (GPS1)
- - SERIAL4 -> UART8   (GPS2,DMA-enabled)
+ - SERIAL4 -> UART8   (GPS2,Tx DMA-enabled)
  - SERIAL5 -> UART7   (USER)
   
 Pinouts
@@ -354,13 +354,13 @@ RC Input
 
 The SBus input pin, which by default is mapped to a timer input, can be used for all ArduPilot supported receiver protocols, except CRSF/ELRS and SRXL2 which require a true UART connection. However, FPort, when connected in this manner, will only provide RC without telemetry. 
 
-To allow CRSF and embedded telemetry available in Fport, CRSF, and SRXL2 receivers, a full UART, such as SERIAL4 (UART8) would need to be used for receiver connections. Below are setups using UART4. :ref:`SERIAL4_PROTOCOL<SERIAL4_PROTOCOL>` should be set to "23".
+To allow CRSF and embedded telemetry available in Fport, CRSF, and SRXL2 receivers, a full UART, specifically as SERIAL2 (UART3) would need to be used for receiver connections. Below are setups using UART3. :ref:`SERIAL2_PROTOCOL<SERIAL2_PROTOCOL>` should be set to "23". 
 
-- FPort would require :ref:`SERIAL4_OPTIONS<SERIAL4_OPTIONS>` be set to "15".
+- FPort would require :ref:`SERIAL2_OPTIONS<SERIAL2_OPTIONS>` be set to "15".
 
-- CRSF would require :ref:`SERIAL4_OPTIONS<SERIAL4_OPTIONS>` be set to "0".
+- CRSF would require :ref:`SERIAL2_OPTIONS<SERIAL2_OPTIONS>` be set to "0".
 
-- SRXL2 would require :ref:`SERIAL4_OPTIONS<SERIAL4_OPTIONS>` be set to "4" and connects only the UART4 TX pin.
+- SRXL2 would require :ref:`SERIAL2_OPTIONS<SERIAL2_OPTIONS>` be set to "4" and connects only the TX pin.
 
 Any UART can be used for RC system connections in ArduPilot also, and is compatible with all protocols except PPM. See :ref:`common-rc-systems` for details.
 
