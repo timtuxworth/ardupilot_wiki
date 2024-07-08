@@ -51,6 +51,20 @@ For Fedora based systems:
     pip3 install PyYAML mavproxy --user
     echo 'export PATH="$PATH:$HOME/.local/bin"' >> ~/.bashrc
 
+On Raspberry Pi Bookworm:
+
+the second step will fail with a message 
+
+error: externally-managed-environment
+
+To install on Raspberry Pi Bookworm follow these steps after completing the apt-get install
+
+.. code:: bash
+
+sudo apt install python3-yaml
+pip3 install mavproxy --user --break-system-packages
+
+
 .. note::
     If MAVProxy is intended to run "headless" (non-GUI), the ``python3-wxgtk4.0`` or ``python3-wxpython4`` packages can be skipped.
 
