@@ -87,6 +87,7 @@ Closed Hardware
     Foxeer H743 MPU600 <common-foxeerh743v1>
     Foxeer Reaper F745-AIO V2 <common-foxeerf745aio>
     Furious FPV F-35 Lightning and Wing FC-10 <common-furiousfpv-f35>
+    HeeWing F405/F405V2 <common-heewingf405>
     Holybro Kakute F4* <common-holybro-kakutef4>
     Holybro Kakute F4 Mini* <common-holybro-kakutef4-mini>
     Holybro Kakute F7 AIO* <common-holybro-kakutef7aio>
@@ -100,6 +101,7 @@ Closed Hardware
     Horizon31 PixC4-Jetson <common-horizon31-pixc4-jetson>
     IFlight Beast F7 45A AIO <common-iflight-beastf7AIO>
     IFlight BeastH7 AIO <common-iflight-beasth7AIO>
+    IFlight Blitz Whoop F7 AIO <common-iflight-blitzf7AIO>
     Mamba F405 MK2* <common-mamba405-mk2>
     Mamba MK4 F405Mini <common-mambaf405-mini>
     Mamba Basic F405 mk3 <common-mamba-basic-mk3>

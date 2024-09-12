@@ -40,7 +40,7 @@ Key to the dynamic notch filter operation is control of its center frequency. Th
 
 #. :ref:`INS_HNTCH_MODE <INS_HNTCH_MODE>` = 0. Dynamic notch frequency control disabled. The center frequency is fixed and is static. Often used in Traditional Helicopters with external governors for rotor speed, either incorporated in the ESC or separate for ICE motors.
 #. :ref:`INS_HNTCH_MODE <INS_HNTCH_MODE>` = 1. (Default) Throttle position based, where the frequency at hover throttle is determined by analysis of logs, and then variation of throttle position above this is used to track the increase in noise frequency. Note that the throttle reference only applies to VTOL motors in QuadPlanes, not forward motors, and will not be effective in fixed wing only flight modes. See :ref:`throttle-based<common-imu-notch-filtering-throttle-based-setup>` for further setup details.
-#. :ref:`INS_HNTCH_MODE <INS_HNTCH_MODE>` = 2. RPM sensor based, where an external :ref:`RPM sensor <common-rpm>` is used to determine the motor frequency and hence primary vibration source's frequency for the notch. Often used in Traditional Helicopters (See :ref:`Helicopters<common-imu-notch-filtering-helicopter-setup>`) using the ArduPilot Head Speed Governor feature. See :ref:`RPM Sensor<common-rpm-based-notch>` for further setup instructions.
+#. :ref:`INS_HNTCH_MODE <INS_HNTCH_MODE>` = 2 (RPM Sensor 1) or 5(RPM Sensor2). RPM sensor based, where an external :ref:`RPM sensor <common-rpm>` is used to determine the motor frequency and hence primary vibration source's frequency for the notch. Often used in Traditional Helicopters (See :ref:`Helicopters<common-imu-notch-filtering-helicopter-setup>`) using the ArduPilot Head Speed Governor feature. See :ref:`RPM Sensor<common-rpm-based-notch>` for further setup instructions.
 #. :ref:`INS_HNTCH_MODE <INS_HNTCH_MODE>` = 3. ESC Telemetry based, where the ESC provides motor RPM information which is used to set the center frequency. This can also be used for the forward motor in fixed wing flight, if the forward motor(s) ESCs report RPM. This requires that your ESCs are configured correctly to support BLHeli telemetry via :ref:`a serial port<blheli32-esc-telemetry>`. See :ref:`ESC Telemetry<common-esc-telem-based-notch>` for further setup instructions. If :ref:`INS_HNTCH_OPTS<INS_HNTCH_OPTS>`, or :ref:`INS_HNTC2_OPTS<INS_HNTC2_OPTS>` if the second set of notches is enabled, has bit 1 set, then a set of notches for each motor will be created, tracking its RPM telemetry, otherwise, the average frequency of all motors will set the center frequency.
 #. :ref:`INS_HNTCH_MODE <INS_HNTCH_MODE>` = 4. If your autopilot supports it (ie. has more than 2MB of flash, see :ref:`common-limited_firmware`), In-Flight FFT, where a running FFT is done in flight to determine the primary noise frequency and adjust the notch's center frequency to match. This probably the best mode if the autopilot is capable of running this feature. This mode also works on fixed wing only Planes. See :ref:`In-Flight FFT <common-imu-fft>` for further setup instructions.
 
@@ -67,12 +67,23 @@ Checking Notch Filter Effectiveness
 
 Once the notch filter(s) are setup, the effectiveness of them can be checked by again measuring the  frequency spectrum of the output of the filters (which are the new inputs to the IMU sensors). Refer back to the :ref:`common-imu-batchsampling`  page for this.
 
-Double/Triple-Notch
-===================
+Multi Notch
+===========
 
-The software notch filters used are very "spikey" being relatively narrow but good at attenuation at their center. On larger copters the noise profile of the motors is quite dirty covering a broader range of frequencies than can be covered by a single notch filter. In order to address this situation it is possible to configure the harmonic notches as double or triple notches that gives a wider spread of significant attenuation. To utilize this feature set :ref:`INS_HNTCH_OPTS <INS_HNTCH_OPTS>` to "1" for double notches, to "16" for triple notches.
+The software notch filters used are very "spikey" being relatively narrow but good at attenuation at their center. On larger copters the noise profile of the motors is quite dirty covering a broader range of frequencies than can be covered by a single notch filter. In order to address this situation it is possible to configure the harmonic notches as multiple notches that gives a wider spread of significant attenuation. The configuration is controlled by the :ref:`INS_HNTCH_OPTS <INS_HNTCH_OPTS>` parameter. This is a bitmask parameter and multiple options are possible at the same time, but using bit 0, 1, and bit 4 at the same time should be avoided. Use only one of those in a given configuration.
+
+==========================================      =======================
+:ref:`INS_HNTCH_OPTS <INS_HNTCH_OPTS>` Bit      Action
+==========================================      =======================
+0                                               Double overlapping Notches
+1                                               MultiSource: if using FFT Mode, the three largest noise sources will have a notch assigned. If ESC Telemetry Mode, then each motor will have a notch assigned at its RPM.
+2                                               Updates the filters at the loop rate. This is cpu intensive, but tracks noise variations faster. Only valid if frequency source updates at loop rate, ie Bi-Directional DShot telemetry.
+3                                               Enables notches on every IMU instead of just the primary. This is cpu intensive, but allows better lane switching decisions in noisy situations and for debugging. Not recommended for F4 boards.
+4                                               Triple overlapping Notches
+==========================================      =======================
 
 .. note:: double notch option is no longer recommended since the triple notch option has been added. With a double notch, the maximum attenuation is either side of the center frequency, so on smaller aircraft with a very pronounced peak their use is usually counter productive.
+
 
 .. note:: Each notch has some CPU cost so if you configure multiple notches you can end up with many notches on your aircraft. For example, triple single (no harmonics) notches, using ESC telemetry will result in 3 notches per motor or 12 total notches. For example, with F4 cpus this should be acceptable, but enabling a second group of triple notches with :ref:`INS_HNTC2_ENABLE<INS_HNTC2_ENABLE>` or multiple harmonic notches, could cause problems.
 

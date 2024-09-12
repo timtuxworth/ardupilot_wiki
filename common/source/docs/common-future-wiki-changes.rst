@@ -7,6 +7,12 @@ Will be in future 4.5 release
 
 [copywiki destination="plane,copter,rover,blimp"]
 
+on :ref:`common-blheli32-passthru` page add note for ESC-Configurator tool:
+===========================================================================
+
+.. note:: firmware 4.5 or later required to use this tool.
+
+
 Add new FENCE_OPTIONS bit:
 ==========================
 
@@ -95,6 +101,11 @@ on :ref:`takeoff-mode` page:
 
 `Takeoff Mode enhancement <https://github.com/ArduPilot/ardupilot_wiki/pull/5173>`__
 
+on :ref:`apms-failsafe-function` page, add long failsafe actions for Mode Takeoff:
+==================================================================================
+
+See: https://github.com/ArduPilot/ardupilot_wiki/pull/5353
+
 on :ref:`quadplane-vtol-tuning-process` page:
 =============================================
 
@@ -102,6 +113,11 @@ on :ref:`quadplane-vtol-tuning-process` page:
 
 [/site]
 [site wiki="copter"]
+on :ref:`traditional-helicopter-tailrotor-setup` page, add info for DDFP tail rotor motor thrust linearization:
+===============================================================================================================
+
+See: https://github.com/ArduPilot/ardupilot_wiki/pull/5328
+
 on :ref:`circle-mode` page, under Circle Control Options, add:
 ==============================================================
 
